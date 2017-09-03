@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Refit" Version="4.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Clubhouse.io.net.RestAPI\Clubhouse.io.net.RestAPI.csproj" />
   </ItemGroup>
 
 </Project>

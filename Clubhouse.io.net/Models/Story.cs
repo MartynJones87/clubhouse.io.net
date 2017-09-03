@@ -1,72 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using Clubhouse.io.net.RestAPI.Entities;
 
 namespace Clubhouse.io.net.Models
 {
     public class Story
     {
-        [JsonProperty(PropertyName = "archived")]
         public bool Archived { get; set; }
 
-        [JsonProperty(PropertyName = "comments")]
+        public bool Blocked { get; set; }
+
+        public bool Blocker { get; set; }
+
+        public List<Branch> Branches { get; set; }
+
         public List<Comment> Comments { get; set; }
 
-        [JsonProperty(PropertyName = "created_at")]
-        public DateTime CreatedAt { get; set; }
+        public List<Commit> Commits { get; set; }
 
-        [JsonProperty(PropertyName = "deadline")]
+        public bool Completed { get; set; }
+
+        public DateTime? CompletedAt { get; set; }
+
+        public DateTime? CompletedAtOverride { get; set; }
+
+        public DateTime? CreatedAt { get; set; }
+
         public DateTime? Deadline { get; set; }
 
-        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
-        [JsonProperty(PropertyName = "epic_id")]
+        public string EntityType { get; set; }
+
         public int? EpicID { get; set; }
 
-        [JsonProperty(PropertyName = "estimate")]
         public int? Estimate { get; set; }
 
-        [JsonProperty(PropertyName = "file_ids")]
-        public List<int> FileIDs { get; set; }
+        public string ExternalID { get; set; }
 
-        [JsonProperty(PropertyName = "follower_ids")]
+        public List<File> Files { get; set; }
+
         public List<Guid> FollowerIDs { get; set; }
 
-        [JsonProperty(PropertyName = "labels")]
         public List<Label> Labels { get; set; }
 
-        [JsonProperty(PropertyName = "linked_file_ids")]
-        public List<int> LinkedFileIDs { get; set; }
+        public List<LinkedFile> LinkedFiles { get; set; }
 
-        [JsonProperty(PropertyName = "name")]
+        public DateTime? MovedAt { get; set; }
+
         public string Name { get; set; }
 
-        [JsonProperty(PropertyName = "owner_ids")]
         public List<Guid> OwnerIDs { get; set; }
 
-        [JsonProperty(PropertyName = "position")]
         public long Position { get; set; }
 
-        [JsonProperty(PropertyName = "project_id")]
         public long ProjectID { get; set; }
 
-        [JsonProperty(PropertyName = "requested_by_id")]
         public Guid RequestedByID { get; set; }
 
-        [JsonProperty(PropertyName = "story_links")]
-        public List<TypedStoryLink> StoryLinks { get; set; }
+        public bool Started { get; set; }
 
-        [JsonProperty(PropertyName = "story_type")]
-        public StoryTypes StoryType { get; set; }
+        public DateTime? StartedAt { get; set; }
 
-        [JsonProperty(PropertyName = "tasks")]
+        public DateTime? StartedAtOverride { get; set; }
+
+        public List<StoryLink> StoryLinks { get; set; }
+
+        public ClubhouseStoryTypes StoryType { get; set; }
+
         public List<Task> Tasks { get; set; }
 
-        [JsonProperty(PropertyName = "updated_at")]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
-        [JsonProperty(PropertyName = "workflow_state_id")]
         public long WorkflowStateID { get; set; }
     }
 }
