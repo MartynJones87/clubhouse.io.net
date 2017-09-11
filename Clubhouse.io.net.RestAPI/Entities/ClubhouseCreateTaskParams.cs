@@ -10,7 +10,7 @@ namespace Clubhouse.io.net.RestAPI.Entities
         public bool Complete { get; set; }
 
         [JsonProperty(PropertyName = "created_at")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
@@ -22,6 +22,6 @@ namespace Clubhouse.io.net.RestAPI.Entities
         public List<Guid> OwnerIDs { get; set; }
 
         [JsonProperty(PropertyName = "updated_at")]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

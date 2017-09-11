@@ -6,13 +6,13 @@ namespace Clubhouse.io.net.RestAPI.Entities
     public class CreateCommentParams
     {
         [JsonProperty(PropertyName = "author_id")]
-        public string AuthorID { get; set; }
+        public Guid AuthorID { get; set; }
 
         [JsonProperty(PropertyName = "created_at")]
         public DateTime CreatedAt { get; set; }
 
         [JsonProperty(PropertyName = "external_id")]
-        public long ExternalID { get; set; }
+        public string ExternalID { get; set; }
 
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }

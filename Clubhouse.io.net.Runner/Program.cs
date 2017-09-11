@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Diagnostics;
-using Newtonsoft.Json;
-using Refit;
+using Clubhouse.io.net.RestAPI.Entities;
 
 namespace Clubhouse.io.net.Runner
 {
@@ -15,26 +14,23 @@ namespace Clubhouse.io.net.Runner
             Clubhouse.ClubhouseAPIKey = ConfigurationManager.AppSettings["apiKey"];
             
             var clubhouse = new Clubhouse();
-            var story = await clubhouse.GetStoryAsync(7);
+            //var story = await clubhouse.GetStoryAsync(7);
 
-            Debug.WriteLine(story.Name);
+            //Debug.WriteLine(story.Name);
 
-            //var apiKey = ConfigurationManager.AppSettings["apiKey"];
-
-            //var clubhouseApi = RestService.For<IClubhouseApi>("https://api.clubhouse.io/api");
-            ////var story = await clubhouseApi.GetStory(272, apiKey);
-
-            ////Console.WriteLine(story.Name);
-
-            //var newStory = new CreateStoryParams()
+            //var newCreateStory = new ClubhouseCreateStoryParams()
             //{
             //    Name = "Test Story Created Through The API",
             //    //ProjectID = 672
             //};
 
-            //var newStoryCreated = await clubhouseApi.CreateStory(newStory, apiKey);
+            //var newStory = await clubhouse.CreateStoryAsync(newCreateStory);
 
-            //Console.WriteLine(newStoryCreated.Name);
+            //Debug.WriteLine(newStory.Name);
+
+            var members = await clubhouse.ListMembersAsync();
+
+            Debug.WriteLine(members);
         }
     }
 }

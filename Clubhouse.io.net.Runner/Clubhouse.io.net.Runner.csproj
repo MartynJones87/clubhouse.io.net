@@ -33,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -62,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Clubhouse.io.net.RestAPI\Clubhouse.io.net.RestAPI.csproj">
+      <Project>{A23C4B0B-2DA9-43F1-B4B8-B42A2B329526}</Project>
+      <Name>Clubhouse.io.net.RestAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Clubhouse.io.net\Clubhouse.io.net.csproj">
       <Project>{F2E281CF-15C0-400C-AD3C-803DD314E0D3}</Project>
       <Name>Clubhouse.io.net</Name>

@@ -7,7 +7,7 @@ namespace Clubhouse.io.net.RestAPI.Entities
     public class ClubhouseCreateStoryParams
     {
         [JsonProperty(PropertyName = "comments")]
-        public List<CreateCommentParams> Comments { get; set; }
+        public List<ClubhouseCreateCommentParams> Comments { get; set; }
 
         [JsonProperty(PropertyName = "completed_at_override")]
         public DateTime? CompletedAtOverride { get; set; }
@@ -31,16 +31,16 @@ namespace Clubhouse.io.net.RestAPI.Entities
         public string ExternalID { get; set; }
 
         [JsonProperty(PropertyName = "file_ids")]
-        public List<int> FileIDs { get; set; }
+        public List<long> FileIDs { get; set; }
 
         [JsonProperty(PropertyName = "follower_ids")]
         public List<Guid> FollowerIDs { get; set; }
 
         [JsonProperty(PropertyName = "labels")]
-        public List<CreateLabelParams> Labels { get; set; }
+        public List<ClubhouseCreateLabelParams> Labels { get; set; }
 
         [JsonProperty(PropertyName = "linked_file_ids")]
-        public List<int> LinkedFileIDs { get; set; }
+        public List<long> LinkedFileIDs { get; set; }
 
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         public string Name { get; set; }

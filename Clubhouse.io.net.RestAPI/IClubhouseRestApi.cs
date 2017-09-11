@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Clubhouse.io.net.RestAPI.Entities;
 using Refit;
 
@@ -17,5 +18,20 @@ namespace Clubhouse.io.net.RestAPI
 
         [Get("/v2/stories/{story-public-id}?token={token}")]
         Task<ClubhouseStory> GetStory([AliasAs("story-public-id")] int storyId, string token);
+
+        [Get("/v2/stories/?token={token}")]
+        Task<ClubhouseStory> CreateStory([Body] ClubhouseCreateStoryParams story, string token);
+
+        [Get("/v2/members?token={token}")]
+        Task<IEnumerable<ClubhouseMember>> ListMembers(string token);
+
+        [Get("/v2/projects?token={token}")]
+        Task<IEnumerable<ClubhouseProject>> ListProjects(string token);
+
+        [Get("/v2/epics?token={token}")]
+        Task<IEnumerable<ClubhouseEpic>> ListEpics(string token);
+
+        [Get("/v2/labels?token={token}")]
+        Task<IEnumerable<ClubhouseLabel>> ListLabels(string token);
     }
 }
