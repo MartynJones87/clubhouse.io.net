@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Configuration;
 using System.Diagnostics;
-using Clubhouse.io.net.RestAPI.Entities;
 
 namespace Clubhouse.io.net.Runner
 {

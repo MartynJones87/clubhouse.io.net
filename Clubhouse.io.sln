@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clubhouse.io.net", "Clubhou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clubhouse.io.net.Runner", "Clubhouse.io.net.Runner\Clubhouse.io.net.Runner.csproj", "{9D680469-6381-4D25-AB5D-0FDBEB262915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clubhouse.io.net.RestAPI", "Clubhouse.io.net.RestAPI\Clubhouse.io.net.RestAPI.csproj", "{A23C4B0B-2DA9-43F1-B4B8-B42A2B329526}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{9D680469-6381-4D25-AB5D-0FDBEB262915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D680469-6381-4D25-AB5D-0FDBEB262915}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D680469-6381-4D25-AB5D-0FDBEB262915}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A23C4B0B-2DA9-43F1-B4B8-B42A2B329526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A23C4B0B-2DA9-43F1-B4B8-B42A2B329526}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A23C4B0B-2DA9-43F1-B4B8-B42A2B329526}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A23C4B0B-2DA9-43F1-B4B8-B42A2B329526}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

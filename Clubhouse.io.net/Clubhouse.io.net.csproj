@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.1</Version>
+    <Version>0.0.3-alpha</Version>
     <Description>A .Net client library for the Clubhouse API https://clubhouse.io/api</Description>
     <Authors>Martyn Jones</Authors>
     <Company>Martyn Jones</Company>
@@ -16,12 +16,6 @@
 
   <ItemGroup>
     <PackageReference Include="Refit" Version="4.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Clubhouse.io.net.RestAPI\Clubhouse.io.net.RestAPI.csproj">
-      <Private>false</Private>
-    </ProjectReference>
   </ItemGroup>
 
 </Project>

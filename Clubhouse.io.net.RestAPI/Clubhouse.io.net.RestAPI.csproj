@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\CreateCommentParams.cs" />
-    <Compile Remove="Entities\CreateLabelParams.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Refit" Version="4.0.1" />
   </ItemGroup>

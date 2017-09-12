@@ -63,10 +63,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Clubhouse.io.net.RestAPI\Clubhouse.io.net.RestAPI.csproj">
-      <Project>{A23C4B0B-2DA9-43F1-B4B8-B42A2B329526}</Project>
-      <Name>Clubhouse.io.net.RestAPI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Clubhouse.io.net\Clubhouse.io.net.csproj">
       <Project>{F2E281CF-15C0-400C-AD3C-803DD314E0D3}</Project>
       <Name>Clubhouse.io.net</Name>

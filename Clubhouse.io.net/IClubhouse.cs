@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Clubhouse.io.net.RestAPI.Entities;
+using Clubhouse.io.net.Entities;
 
 namespace Clubhouse.io.net
 {
