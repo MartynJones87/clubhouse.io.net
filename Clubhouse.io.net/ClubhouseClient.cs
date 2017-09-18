@@ -5,7 +5,7 @@ using Refit;
 
 namespace Clubhouse.io.net
 {
-    public class Clubhouse : IClubhouse
+    public class ClubhouseClient : IClubhouseClient
     {
         public static string ClubhouseAPIKey { get; set; }
 

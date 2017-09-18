@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Linq;
+using Clubhouse.io.net.Entities;
 
 namespace Clubhouse.io.net.Runner
 {
@@ -10,26 +12,28 @@ namespace Clubhouse.io.net.Runner
         {
             Console.WriteLine("Hello world!");
 
-            Clubhouse.ClubhouseAPIKey = ConfigurationManager.AppSettings["apiKey"];
+            ClubhouseClient.ClubhouseAPIKey = ConfigurationManager.AppSettings["apiKey"];
             
-            var clubhouse = new Clubhouse();
+            var clubhouse = new ClubhouseClient();
             //var story = await clubhouse.GetStoryAsync(7);
 
             //Debug.WriteLine(story.Name);
 
-            //var newCreateStory = new ClubhouseCreateStoryParams()
-            //{
-            //    Name = "Test Story Created Through The API",
-            //    //ProjectID = 672
-            //};
+            var projects = await clubhouse.ListProjectsAsync();
 
-            //var newStory = await clubhouse.CreateStoryAsync(newCreateStory);
+            var newCreateStory = new ClubhouseCreateStoryParams()
+            {
+                Name = "Test Story Created Through The API",
+                ProjectID = projects.FirstOrDefault()?.ID
+            };
 
-            //Debug.WriteLine(newStory.Name);
+            var newStory = await clubhouse.CreateStoryAsync(newCreateStory);
 
-            var members = await clubhouse.ListMembersAsync();
+            Debug.WriteLine(newStory.Name);
 
-            Debug.WriteLine(members);
+            //var members = await clubhouse.ListMembersAsync();
+
+            //Debug.WriteLine(members);
         }
     }
 }

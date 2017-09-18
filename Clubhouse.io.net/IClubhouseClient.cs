@@ -4,7 +4,7 @@ using Clubhouse.io.net.Entities;
 
 namespace Clubhouse.io.net
 {
-    public interface IClubhouse
+    public interface IClubhouseClient
     {
         Task<ClubhouseStory> GetStoryAsync(int storyID);
 
