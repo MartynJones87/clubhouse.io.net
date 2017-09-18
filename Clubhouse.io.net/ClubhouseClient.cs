@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Clubhouse.io.net.Entities;
 using Refit;
@@ -19,10 +20,17 @@ namespace Clubhouse.io.net
 
         public async Task<ClubhouseStory> CreateStoryAsync(ClubhouseCreateStoryParams story)
         {
-            var clubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
-            var clubhouseStory = await clubhouseApi.CreateStory(story, ClubhouseAPIKey);
+            try
+            {
+                var clubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
+                var clubhouseStory = await clubhouseApi.CreateStory(story, ClubhouseAPIKey);
 
-            return clubhouseStory;
+                return clubhouseStory;
+            }
+            catch (Refit.ApiException apiException)
+            {
+                throw new ClubhouseApiException(apiException);
+            }
         }
 
         public async Task<IEnumerable<ClubhouseMember>> ListMembersAsync()
@@ -55,6 +63,14 @@ namespace Clubhouse.io.net
             var clubhouseLabels = await clubhouseApi.ListLabels(ClubhouseAPIKey);
 
             return clubhouseLabels;
+        }
+
+        public async Task<IEnumerable<ClubhouseWorkflow>> ListWorkflowsAsync()
+        {
+            var clubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
+            var clubhouseWorkflows = await clubhouseApi.ListWorkflows(ClubhouseAPIKey);
+
+            return clubhouseWorkflows;
         }
     }
 }

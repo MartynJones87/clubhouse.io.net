@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace Clubhouse.io.net.Entities
 {
     public enum ClubhouseStoryTypes
     {
-        [Description("feature")]
+        [EnumMember(Value = "feature")]
         Feature,
-        [Description("chore")]
+        [EnumMember(Value = "chore")]
         Chore,
-        [Description("bug")]
+        [EnumMember(Value = "bug")]
         Bug
     }
 }

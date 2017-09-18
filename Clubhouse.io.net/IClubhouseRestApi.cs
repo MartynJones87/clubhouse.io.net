@@ -19,7 +19,7 @@ namespace Clubhouse.io.net
         [Get("/v2/stories/{story-public-id}?token={token}")]
         Task<ClubhouseStory> GetStory([AliasAs("story-public-id")] int storyId, string token);
 
-        [Get("/v2/stories/?token={token}")]
+        [Post("/v2/stories?token={token}")]
         Task<ClubhouseStory> CreateStory([Body] ClubhouseCreateStoryParams story, string token);
 
         [Get("/v2/members?token={token}")]
@@ -33,5 +33,8 @@ namespace Clubhouse.io.net
 
         [Get("/v2/labels?token={token}")]
         Task<IEnumerable<ClubhouseLabel>> ListLabels(string token);
+
+        [Get("/v2/workflows?token={token}")]
+        Task<IEnumerable<ClubhouseWorkflow>> ListWorkflows(string token);
     }
 }

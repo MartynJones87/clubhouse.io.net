@@ -20,13 +20,18 @@ namespace Clubhouse.io.net.Runner
             //Debug.WriteLine(story.Name);
 
             var projects = await clubhouse.ListProjectsAsync();
+            var workflows = await clubhouse.ListWorkflowsAsync();
+            var users = await clubhouse.ListMembersAsync();
 
-            var newCreateStory = new ClubhouseCreateStoryParams()
-            {
-                Name = "Test Story Created Through The API",
-                ProjectID = projects.FirstOrDefault()?.ID
-            };
+            //Debug.WriteLine(projects.FirstOrDefault()?.ID);
 
+            var newCreateStory = new ClubhouseCreateStoryParams(
+                "Test Story Created Through The API",
+                projects.FirstOrDefault(), 
+                users.FirstOrDefault(), 
+                workflows.FirstOrDefault().States.First(), 
+                ClubhouseStoryTypes.Feature);
+            
             var newStory = await clubhouse.CreateStoryAsync(newCreateStory);
 
             Debug.WriteLine(newStory.Name);

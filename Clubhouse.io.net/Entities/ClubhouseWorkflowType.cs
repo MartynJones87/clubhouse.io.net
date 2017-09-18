@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace Clubhouse.io.net.Entities
 {
     public enum ClubhouseWorkflowType
     {
-        [Description("Unstarted")]
+        [EnumMember(Value = "unstarted")]
         Unstarted,
-        [Description("Started")]
+        [EnumMember(Value = "started")]
         Started,
-        [Description("Finished")]
-        Finished
+        [EnumMember(Value = "done")]
+        Done
     }
 }

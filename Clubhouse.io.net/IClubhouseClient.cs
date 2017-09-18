@@ -17,5 +17,7 @@ namespace Clubhouse.io.net
         Task<IEnumerable<ClubhouseEpic>> ListEpicsAsync();
 
         Task<IEnumerable<ClubhouseLabel>> ListLabelsAsync();
+
+        Task<IEnumerable<ClubhouseWorkflow>> ListWorkflowsAsync();
     }
 }

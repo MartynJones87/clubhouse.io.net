@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Clubhouse.io.net.Entities
 {
@@ -17,7 +18,7 @@ namespace Clubhouse.io.net.Entities
         [JsonProperty(PropertyName = "entity_type")]
         public string EntityType { get; set; }
 
-    [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id")]
         public long ID { get; set; }
 
         [JsonProperty(PropertyName = "name")]
@@ -30,6 +31,7 @@ namespace Clubhouse.io.net.Entities
         public long Position { get; set; }
 
         [JsonProperty(PropertyName = "type")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ClubhouseWorkflowType Type { get; set; }
 
         [JsonProperty(PropertyName = "updated_at")]
