@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using Clubhouse.io.net.Entities;
+using Clubhouse.io.net.Entities.Stories;
 
 namespace Clubhouse.io.net.Runner
 {
