@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Clubhouse.io.net.Entities;
@@ -36,27 +37,27 @@ namespace Clubhouse.io.net
 
         #region Epics
 
-        Task<IEnumerable<ClubhouseEpic>> ListEpicsAsync(string token);
+        Task<IEnumerable<ClubhouseEpic>> ListEpicsAsync();
 
-        Task<ClubhouseEpic> CreateEpicAsync(ClubhouseCreateEpicParams epic, string token);
+        Task<ClubhouseEpic> CreateEpicAsync(ClubhouseCreateEpicParams epic);
 
-        Task<ClubhouseEpic> GetEpicAsync(long epicId, string token);
+        Task<ClubhouseEpic> GetEpicAsync(long epicId);
 
-        Task<ClubhouseEpic> UpdateEpicAsync(ClubhouseUpdateEpicParams epicParams, long epicId, string token);
+        Task<ClubhouseEpic> UpdateEpicAsync(ClubhouseUpdateEpicParams epicParams, long epicId);
 
-        Task DeleteEpicAsync(long epicID, string token);
+        Task DeleteEpicAsync(long epicID);
 
-        Task<IEnumerable<ClubhouseThreadedComment>> ListEpicCommentsAsync(long epicId, string token);
+        Task<IEnumerable<ClubhouseThreadedComment>> ListEpicCommentsAsync(long epicId);
 
-        Task<ClubhouseThreadedComment> CreateEpicCommentAsync(ClubhouseCreateEpicCommentParams commentParams, long epicId, string token);
+        Task<ClubhouseThreadedComment> CreateEpicCommentAsync(ClubhouseCreateEpicCommentParams commentParams, long epicId);
 
-        Task<ClubhouseThreadedComment> GetEpicCommentAsync(long epicId, long commentId, string token);
+        Task<ClubhouseThreadedComment> GetEpicCommentAsync(long epicId, long commentId);
 
-        Task<ClubhouseThreadedComment> CreateEpicCommentCommentAsync(ClubhouseCreateEpicCommentParams commentParams, long epicId, long commentId, string token);
+        Task<ClubhouseThreadedComment> CreateEpicCommentCommentAsync(ClubhouseCreateEpicCommentParams commentParams, long epicId, long commentId);
 
-        Task<ClubhouseThreadedComment> UpdateEpicCommentAsync(ClubhouseUpdateEpicCommentParams commentParams, long epicId, long commentId, string token);
+        Task<ClubhouseThreadedComment> UpdateEpicCommentAsync(ClubhouseUpdateEpicCommentParams commentParams, long epicId, long commentId);
 
-        Task DeleteEpicCommentAsync(long epicId, long commentId, string token);
+        Task DeleteEpicCommentAsync(long epicId, long commentId);
 
         #endregion // Epics
 
@@ -106,7 +107,9 @@ namespace Clubhouse.io.net
 
         Task<IEnumerable<ClubhouseMember>> ListMembersAsync();
 
-        Task<ClubhouseMember> GetMemberAsync(long memberId);
+        Task<ClubhouseMember> GetMemberAsync(Guid memberId);
+
+        Task<IEnumerable<ClubhouseMember>> GetMembersAsync(IEnumerable<Guid> memberIds);
 
         #endregion // Members
 
@@ -183,12 +186,11 @@ namespace Clubhouse.io.net
 
         #region Story-Links
 
-        Task<ClubhouseStoryLink> CreateStoryLinkAsync(ClubhouseCreateStoryLinkParams storyLinkParams,
-            string token);
+        Task<ClubhouseStoryLink> CreateStoryLinkAsync(ClubhouseCreateStoryLinkParams storyLinkParams);
 
-        Task<ClubhouseStoryLink> GetStoryLink(long storyLinkId, string token);
+        Task<ClubhouseStoryLink> GetStoryLink(long storyLinkId);
 
-        Task DeleteStoryLinkAsync(long storyLinkId, string token);
+        Task DeleteStoryLinkAsync(long storyLinkId);
 
         #endregion // Story-Links
 
@@ -196,7 +198,7 @@ namespace Clubhouse.io.net
 
         Task<IEnumerable<ClubhouseTeam>> ListTeamsAsync();
 
-        Task<ClubhouseTeam> GetTeamAsync(long teamId, string token);
+        Task<ClubhouseTeam> GetTeamAsync(long teamId);
 
         #endregion // Teams
 

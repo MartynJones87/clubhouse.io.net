@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clubhouse.io.net.Entities;
 using Clubhouse.io.net.Entities.Categories;
@@ -140,7 +141,7 @@ namespace Clubhouse.io.net
         Task<IEnumerable<ClubhouseMember>> ListMembersAsync(string token);
 
         [Get("/v2/members/{memberId}?token={token}")]
-        Task<ClubhouseMember> GetMemberAsync(long memberId, string token);
+        Task<ClubhouseMember> GetMemberAsync(Guid memberId, string token);
 
         #endregion // Members
 

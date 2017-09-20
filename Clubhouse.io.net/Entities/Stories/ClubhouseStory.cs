@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using Clubhouse.io.net.Entities.Epics;
 using Clubhouse.io.net.Entities.Files;
 using Clubhouse.io.net.Entities.Labels;
 using Clubhouse.io.net.Entities.LinkedFiles;
+using Clubhouse.io.net.Entities.Members;
+using Clubhouse.io.net.Entities.Projects;
+using Clubhouse.io.net.Entities.Workflows;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Clubhouse.io.net.Entities.Stories
 {
@@ -49,7 +54,7 @@ namespace Clubhouse.io.net.Entities.Stories
         public string EntityType { get; set; }
 
         [JsonProperty(PropertyName = "epic_id")]
-        public int? EpicID { get; set; }
+        public long? EpicID { get; set; }
 
         [JsonProperty(PropertyName = "estimate")]
         public int? Estimate { get; set; }
@@ -103,6 +108,7 @@ namespace Clubhouse.io.net.Entities.Stories
         public List<ClubhouseTypedStoryLink> StoryLinks { get; set; }
 
         [JsonProperty(PropertyName = "story_type")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ClubhouseStoryTypes StoryType { get; set; }
 
         [JsonProperty(PropertyName = "tasks")]
@@ -113,5 +119,25 @@ namespace Clubhouse.io.net.Entities.Stories
 
         [JsonProperty(PropertyName = "workflow_state_id")]
         public long WorkflowStateID { get; set; }
+
+        // The following properties are not mapped into/from JSON
+        [JsonIgnore]
+        public ClubhouseEpic Epic { get; set; }
+
+        [JsonIgnore]
+        public IEnumerable<ClubhouseMember> Followers { get; set; }
+
+        [JsonIgnore]
+        public IEnumerable<ClubhouseMember> Owners { get; set; }
+
+        [JsonIgnore]
+        public ClubhouseProject Project { get; set; }
+
+        [JsonIgnore]
+        public ClubhouseMember Requester { get; set; }
+
+        [JsonIgnore]
+        public ClubhouseWorkflowState WorkflowState { get; set; }
+        
     }
 }

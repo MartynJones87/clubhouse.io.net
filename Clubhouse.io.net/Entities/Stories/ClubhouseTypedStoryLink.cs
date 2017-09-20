@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Clubhouse.io.net.Entities.Stories
 {
@@ -27,6 +28,7 @@ namespace Clubhouse.io.net.Entities.Stories
         public DateTime? UpdatedAt { get; set; }
 
         [JsonProperty(PropertyName = "verb")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ClubhouseStoryVerbs Verb { get; set; }
     }
 }

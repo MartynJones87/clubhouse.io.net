@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Clubhouse.io.net.Entities.Categories;
 using Clubhouse.io.net.Entities.Epics;
@@ -58,69 +59,65 @@ namespace Clubhouse.io.net
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ClubhouseEpic>> ListEpicsAsync(string token)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion // Categories
 
         #region Epics
 
         public async Task<IEnumerable<ClubhouseEpic>> ListEpicsAsync()
         {
-            var clubhouseEpics = await ClubhouseApi.ListEpicsAsync(ClubhouseApiKey);
+            var epics = await ClubhouseApi.ListEpicsAsync(ClubhouseApiKey);
 
-            return clubhouseEpics;
+            return epics;
         }
 
-        public async Task<ClubhouseEpic> CreateEpicAsync(ClubhouseCreateEpicParams epic, string token)
+        public async Task<ClubhouseEpic> CreateEpicAsync(ClubhouseCreateEpicParams epic)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ClubhouseEpic> GetEpicAsync(long epicId, string token)
+        public async Task<ClubhouseEpic> GetEpicAsync(long epicId)
+        {
+            var epic = await ClubhouseApi.GetEpicAsync(epicId, ClubhouseApiKey);
+
+            return epic;
+        }
+
+        public async Task<ClubhouseEpic> UpdateEpicAsync(ClubhouseUpdateEpicParams epicParams, long epicId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ClubhouseEpic> UpdateEpicAsync(ClubhouseUpdateEpicParams epicParams, long epicId, string token)
+        public async Task DeleteEpicAsync(long epicID)
         {
             throw new NotImplementedException();
         }
 
-        public async Task DeleteEpicAsync(long epicID, string token)
+        public async Task<IEnumerable<ClubhouseThreadedComment>> ListEpicCommentsAsync(long epicId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ClubhouseThreadedComment>> ListEpicCommentsAsync(long epicId, string token)
+        public async Task<ClubhouseThreadedComment> CreateEpicCommentAsync(ClubhouseCreateEpicCommentParams commentParams, long epicId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ClubhouseThreadedComment> CreateEpicCommentAsync(ClubhouseCreateEpicCommentParams commentParams, long epicId, string token)
+        public async Task<ClubhouseThreadedComment> GetEpicCommentAsync(long epicId, long commentId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ClubhouseThreadedComment> GetEpicCommentAsync(long epicId, long commentId, string token)
+        public async Task<ClubhouseThreadedComment> CreateEpicCommentCommentAsync(ClubhouseCreateEpicCommentParams commentParams, long epicId, long commentId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ClubhouseThreadedComment> CreateEpicCommentCommentAsync(ClubhouseCreateEpicCommentParams commentParams, long epicId, long commentId,
-            string token)
+        public async Task<ClubhouseThreadedComment> UpdateEpicCommentAsync(ClubhouseUpdateEpicCommentParams commentParams, long epicId, long commentId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ClubhouseThreadedComment> UpdateEpicCommentAsync(ClubhouseUpdateEpicCommentParams commentParams, long epicId, long commentId, string token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task DeleteEpicCommentAsync(long epicId, long commentId, string token)
+        public async Task DeleteEpicCommentAsync(long epicId, long commentId)
         {
             throw new NotImplementedException();
         }
@@ -220,14 +217,24 @@ namespace Clubhouse.io.net
 
         public async Task<IEnumerable<ClubhouseMember>> ListMembersAsync()
         {
-            var clubhouseMembers = await ClubhouseApi.ListMembersAsync(ClubhouseApiKey);
+            var members = await ClubhouseApi.ListMembersAsync(ClubhouseApiKey);
 
-            return clubhouseMembers;
+            return members;
         }
 
-        public async Task<ClubhouseMember> GetMemberAsync(long memberId)
+        public async Task<ClubhouseMember> GetMemberAsync(Guid memberId)
         {
-            throw new NotImplementedException();
+            var member = await ClubhouseApi.GetMemberAsync(memberId, ClubhouseApiKey);
+
+            return member;
+        }
+
+        public async Task<IEnumerable<ClubhouseMember>> GetMembersAsync(IEnumerable<Guid> memberIds)
+        {
+            var membersTasks = memberIds.Select(GetMemberAsync);
+            var members = await Task.WhenAll(membersTasks);
+
+            return members;
         }
 
         #endregion // Members
@@ -277,7 +284,9 @@ namespace Clubhouse.io.net
 
         public async Task<ClubhouseProject> GetProjectAsync(long projectId)
         {
-            throw new NotImplementedException();
+            var project = await ClubhouseApi.GetProjectAsync(projectId, ClubhouseApiKey);
+
+            return project;
         }
 
         public async Task<ClubhouseProject> UpdateProjectAsync(ClubhouseUpdateProjectParams projectParams, long projectId)
@@ -339,25 +348,60 @@ namespace Clubhouse.io.net
 
         public async Task<ClubhouseStory> GetStoryAsync(long storyID, ClubhouseStoryFields[] includeFields = null)
         {
-            var clubhouseStory = await ClubhouseApi.GetStoryAsync(storyID, ClubhouseApiKey);
+            var story = await ClubhouseApi.GetStoryAsync(storyID, ClubhouseApiKey);
 
-            if (includeFields != null)
+            if (includeFields == null)
             {
-                foreach (var field in includeFields)
+                return story;
+            }
+
+            foreach (var field in includeFields)
+            {
+                switch (field)
                 {
-                    switch (field)
-                    {
-                        case ClubhouseStoryFields.Owners:
+                    case ClubhouseStoryFields.Epic:
+                        {
+                            if (story.EpicID != null)
                             {
-                                break;
+                                story.Epic = await GetEpicAsync((long)story.EpicID);
                             }
-                        default:
+                            break;
+                        }
+                    case ClubhouseStoryFields.Followers:
+                        {
+                            story.Followers = await GetMembersAsync(story.FollowerIDs);
+                            break;
+                        }
+                    case ClubhouseStoryFields.Owners:
+                        {
+                            story.Owners = await GetMembersAsync(story.OwnerIDs);
+                            break;
+                        }
+                    case ClubhouseStoryFields.Project:
+                        {
+                            story.Project = await GetProjectAsync(story.ProjectID);
+                            break;
+                        }
+                    case ClubhouseStoryFields.Requester:
+                        {
+                            story.Requester = await GetMemberAsync(story.RequestedByID);
+                            break;
+                        }
+                    case ClubhouseStoryFields.WorkflowState:
+                        {
+                            var workflows = await ListWorkflowsAsync();
+                            var states = workflows.SelectMany(w => w.States).ToList();
+                            story.WorkflowState = states.FirstOrDefault(s => s.ID == story.WorkflowStateID);
+                            break;
+                        }
+                    default:
+                        {
                             throw new ArgumentOutOfRangeException();
-                    }
+                        }
                 }
             }
 
-            return clubhouseStory;
+            return story;
         }
 
         public async Task<ClubhouseStory> UpdateStoryAsync(ClubhouseUpdateStoryParams storyParams, long storyId)
@@ -414,17 +458,17 @@ namespace Clubhouse.io.net
 
         #region Story-Links
 
-        public async Task<ClubhouseStoryLink> CreateStoryLinkAsync(ClubhouseCreateStoryLinkParams storyLinkParams, string token)
+        public async Task<ClubhouseStoryLink> CreateStoryLinkAsync(ClubhouseCreateStoryLinkParams storyLinkParams)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ClubhouseStoryLink> GetStoryLink(long storyLinkId, string token)
+        public async Task<ClubhouseStoryLink> GetStoryLink(long storyLinkId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task DeleteStoryLinkAsync(long storyLinkId, string token)
+        public async Task DeleteStoryLinkAsync(long storyLinkId)
         {
             throw new NotImplementedException();
         }
@@ -438,7 +482,7 @@ namespace Clubhouse.io.net
             throw new NotImplementedException();
         }
 
-        public async Task<ClubhouseTeam> GetTeamAsync(long teamId, string token)
+        public async Task<ClubhouseTeam> GetTeamAsync(long teamId)
         {
             throw new NotImplementedException();
         }

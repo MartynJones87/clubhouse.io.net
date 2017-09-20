@@ -1,14 +1,14 @@
-﻿using System.ComponentModel;
+﻿using System.Runtime.Serialization;
 
 namespace Clubhouse.io.net.Entities.Stories
 {
     public enum ClubhouseStoryVerbs
     {
-        [Description("blocks")]
+        [EnumMember(Value = "blocks")]
         Blocks,
-        [Description("duplicates")]
+        [EnumMember(Value = "duplicates")]
         Duplicates,
-        [Description("relates to")]
+        [EnumMember(Value = "relates to")]
         RelatesTo
     }
 }
