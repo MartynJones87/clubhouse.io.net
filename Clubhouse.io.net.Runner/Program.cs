@@ -13,9 +13,9 @@ namespace Clubhouse.io.net.Runner
         {
             Console.WriteLine("Hello world!");
 
-            ClubhouseClient.ClubhouseAPIKey = ConfigurationManager.AppSettings["apiKey"];
+            var apiKey = ConfigurationManager.AppSettings["apiKey"];
             
-            var clubhouse = new ClubhouseClient();
+            var clubhouse = new ClubhouseClient(apiKey);
             //var story = await clubhouse.GetStoryAsync(7);
 
             //Debug.WriteLine(story.Name);
@@ -35,7 +35,7 @@ namespace Clubhouse.io.net.Runner
             
             var newStory = await clubhouse.CreateStoryAsync(newCreateStory);
 
-            Debug.WriteLine(newStory.Name);
+            //Debug.WriteLine(newStory.Name);
 
             //var members = await clubhouse.ListMembersAsync();
 

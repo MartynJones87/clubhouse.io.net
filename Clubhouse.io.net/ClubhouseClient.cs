@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Clubhouse.io.net.Entities;
 using Clubhouse.io.net.Entities.Categories;
 using Clubhouse.io.net.Entities.Epics;
 using Clubhouse.io.net.Entities.Files;
@@ -23,7 +21,15 @@ namespace Clubhouse.io.net
 {
     public class ClubhouseClient : IClubhouseClient
     {
-        public static string ClubhouseAPIKey { get; set; }
+        private string ClubhouseApiKey { get; set; }
+        private IClubhouseRestApi ClubhouseApi { get; set; }
+
+
+        public ClubhouseClient(string clubhouseApiKey)
+        {
+            ClubhouseApiKey = clubhouseApiKey;
+            ClubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
+        }
 
         #region Categories
 
@@ -63,8 +69,7 @@ namespace Clubhouse.io.net
 
         public async Task<IEnumerable<ClubhouseEpic>> ListEpicsAsync()
         {
-            var clubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
-            var clubhouseEpics = await clubhouseApi.ListEpicsAsync(ClubhouseAPIKey);
+            var clubhouseEpics = await ClubhouseApi.ListEpicsAsync(ClubhouseApiKey);
 
             return clubhouseEpics;
         }
@@ -155,8 +160,7 @@ namespace Clubhouse.io.net
 
         public async Task<IEnumerable<ClubhouseLabel>> ListLabelsAsync()
         {
-            var clubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
-            var clubhouseLabels = await clubhouseApi.ListLabelsAsync(ClubhouseAPIKey);
+            var clubhouseLabels = await ClubhouseApi.ListLabelsAsync(ClubhouseApiKey);
 
             return clubhouseLabels;
         }
@@ -216,8 +220,7 @@ namespace Clubhouse.io.net
 
         public async Task<IEnumerable<ClubhouseMember>> ListMembersAsync()
         {
-            var clubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
-            var clubhouseMembers = await clubhouseApi.ListMembersAsync(ClubhouseAPIKey);
+            var clubhouseMembers = await ClubhouseApi.ListMembersAsync(ClubhouseApiKey);
 
             return clubhouseMembers;
         }
@@ -262,8 +265,7 @@ namespace Clubhouse.io.net
 
         public async Task<IEnumerable<ClubhouseProject>> ListProjectsAsync()
         {
-            var clubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
-            var clubhouseProjects = await clubhouseApi.ListProjectsAsync(ClubhouseAPIKey);
+            var clubhouseProjects = await ClubhouseApi.ListProjectsAsync(ClubhouseApiKey);
 
             return clubhouseProjects;
         }
@@ -315,8 +317,7 @@ namespace Clubhouse.io.net
         {
             try
             {
-                var clubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
-                var clubhouseStory = await clubhouseApi.CreateStoryAsync(story, ClubhouseAPIKey);
+                var clubhouseStory = await ClubhouseApi.CreateStoryAsync(story, ClubhouseApiKey);
 
                 return clubhouseStory;
             }
@@ -338,8 +339,7 @@ namespace Clubhouse.io.net
 
         public async Task<ClubhouseStory> GetStoryAsync(long storyID, ClubhouseStoryFields[] includeFields = null)
         {
-            var clubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
-            var clubhouseStory = await clubhouseApi.GetStoryAsync(storyID, ClubhouseAPIKey);
+            var clubhouseStory = await ClubhouseApi.GetStoryAsync(storyID, ClubhouseApiKey);
 
             if (includeFields != null)
             {
@@ -348,9 +348,9 @@ namespace Clubhouse.io.net
                     switch (field)
                     {
                         case ClubhouseStoryFields.Owners:
-                        {
-                            break;
-                        }
+                            {
+                                break;
+                            }
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -449,8 +449,7 @@ namespace Clubhouse.io.net
 
         public async Task<IEnumerable<ClubhouseWorkflow>> ListWorkflowsAsync()
         {
-            var clubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
-            var clubhouseWorkflows = await clubhouseApi.ListWorkflowsAsync(ClubhouseAPIKey);
+            var clubhouseWorkflows = await ClubhouseApi.ListWorkflowsAsync(ClubhouseApiKey);
 
             return clubhouseWorkflows;
         }
