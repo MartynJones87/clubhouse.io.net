@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,10 +23,13 @@ namespace Clubhouse.io.net
 {
     public class ClubhouseClient : IClubhouseClient
     {
-        private string ClubhouseApiKey { get; set; }
+        private string ClubhouseApiKey { get; }
         private IClubhouseRestApi ClubhouseApi { get; set; }
 
-
+        /// <summary>
+        /// Instantiates a new instance of the ClubhouseClient
+        /// </summary>
+        /// <param name="clubhouseApiKey"></param>
         public ClubhouseClient(string clubhouseApiKey)
         {
             ClubhouseApiKey = clubhouseApiKey;
@@ -34,35 +38,88 @@ namespace Clubhouse.io.net
 
         #region Categories
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseCategory"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseCategory"/></returns>
         public async Task<IEnumerable<ClubhouseCategory>> ListCategoriesAsync()
         {
-            throw new NotImplementedException();
+            var categories = await ClubhouseApi.ListCategoriesAsync(ClubhouseApiKey);
+
+            return categories;
         }
 
-        public async Task<ClubhouseCategory> CreateCategoryAsync(ClubhouseCreateCategoryParams category)
+        public async Task<ClubhouseCategory> CreateCategoryAsync(ClubhouseCreateCategoryParams categoryParams)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await ClubhouseApi.CreateCategoryAsync(categoryParams, ClubhouseApiKey);
+
+                return category;
+            }
+            catch (ApiException exception)
+            {
+                Debug.WriteLine(exception.Message);
+                Debug.WriteLine(exception.Content);
+                return null;
+            }
         }
 
-        public async Task<ClubhouseCategory> GetCategoryAsync(int categoryId)
+        public async Task<ClubhouseCategory> GetCategoryAsync(long categoryId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await ClubhouseApi.GetCategoryAsync(categoryId, ClubhouseApiKey);
+
+                return category;
+            }
+            catch (ApiException exception)
+            {
+                Debug.WriteLine(exception.Message);
+                Debug.WriteLine(exception.Content);
+                return null;
+            }
         }
 
-        public async Task<ClubhouseCategory> UpdateCategoryAsync(ClubhouseUpdateCategoryParams category, int categoryId)
+        public async Task<ClubhouseCategory> UpdateCategoryAsync(ClubhouseUpdateCategoryParams categoryParams, long categoryId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await ClubhouseApi.UpdateCategoryAsync(categoryParams, categoryId, ClubhouseApiKey);
+
+                return category;
+            }
+            catch (ApiException exception)
+            {
+                Debug.WriteLine(exception.Message);
+                Debug.WriteLine(exception.Content);
+                return null;
+            }
         }
 
-        public async Task DeleteCategoryAsync(int categoryID)
+        public async Task DeleteCategoryAsync(long categoryID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await ClubhouseApi.DeleteCategoryAsync(categoryID, ClubhouseApiKey);
+            }
+            catch (ApiException exception)
+            {
+                Debug.WriteLine(exception.Message);
+                Debug.WriteLine(exception.Content);
+            }
         }
 
         #endregion // Categories
 
         #region Epics
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseEpic"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseEpic"/></returns>
         public async Task<IEnumerable<ClubhouseEpic>> ListEpicsAsync()
         {
             var epics = await ClubhouseApi.ListEpicsAsync(ClubhouseApiKey);
@@ -92,9 +149,17 @@ namespace Clubhouse.io.net
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseThreadedComment"/> for the <see cref="ClubhouseEpic"/>
+        /// with the given Epic ID.
+        /// </summary>
+        /// <param name="epicId">The ID of the <see cref="ClubhouseEpic"/> to get Threaded Comments for</param>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseThreadedComment"/></returns>
         public async Task<IEnumerable<ClubhouseThreadedComment>> ListEpicCommentsAsync(long epicId)
         {
-            throw new NotImplementedException();
+            var epicComments = await ClubhouseApi.ListEpicCommentsAsync(epicId, ClubhouseApiKey);
+
+            return epicComments;
         }
 
         public async Task<ClubhouseThreadedComment> CreateEpicCommentAsync(ClubhouseCreateEpicCommentParams commentParams, long epicId)
@@ -126,9 +191,16 @@ namespace Clubhouse.io.net
 
         #region Files
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseFile"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseFile"/></returns>
         public async Task<IEnumerable<ClubhouseFile>> ListFilesAsync()
         {
-            throw new NotImplementedException();
+            var files = await ClubhouseApi.ListFilesAsync(ClubhouseApiKey);
+
+            return files;
         }
 
         public async Task<ClubhouseFile> GetFileAsync(long fileId)
@@ -155,6 +227,11 @@ namespace Clubhouse.io.net
 
         #region Labels
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseLabel"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseLabel"/></returns>
         public async Task<IEnumerable<ClubhouseLabel>> ListLabelsAsync()
         {
             var clubhouseLabels = await ClubhouseApi.ListLabelsAsync(ClubhouseApiKey);
@@ -186,9 +263,16 @@ namespace Clubhouse.io.net
 
         #region Linked Files
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseLinkedFile"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseLinkedFile"/></returns>
         public async Task<IEnumerable<ClubhouseLinkedFile>> ListLinkedFilesAsync()
         {
-            throw new NotImplementedException();
+            var linkedFiles = await ClubhouseApi.ListLinkedFilesAsync(ClubhouseApiKey);
+
+            return linkedFiles;
         }
 
         public async Task<ClubhouseLinkedFile> CreateLinkedFileAsync(ClubhouseCreateLinkedFileParams label)
@@ -215,6 +299,11 @@ namespace Clubhouse.io.net
 
         #region Members
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseMember"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseMember"/></returns>
         public async Task<IEnumerable<ClubhouseMember>> ListMembersAsync()
         {
             var members = await ClubhouseApi.ListMembersAsync(ClubhouseApiKey);
@@ -241,9 +330,16 @@ namespace Clubhouse.io.net
 
         #region Milestones
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseMilestone"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseMilestone"/></returns>
         public async Task<IEnumerable<ClubhouseMilestone>> ListMilestonesAsync()
         {
-            throw new NotImplementedException();
+            var milestones = await ClubhouseApi.ListMilestonesAsync(ClubhouseApiKey);
+
+            return milestones;
         }
 
         public async Task<ClubhouseMilestone> CreateMilestoneAsync(ClubhouseCreateMilestoneParams milestone)
@@ -270,6 +366,11 @@ namespace Clubhouse.io.net
 
         #region Projects
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseProject"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseProject"/></returns>
         public async Task<IEnumerable<ClubhouseProject>> ListProjectsAsync()
         {
             var clubhouseProjects = await ClubhouseApi.ListProjectsAsync(ClubhouseApiKey);
@@ -299,18 +400,33 @@ namespace Clubhouse.io.net
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseStory"/>
+        /// objects in the given <see cref="ClubhouseProject"/> ID.
+        /// </summary>
+        /// <param name="projectId">The ID of the <see cref="ClubhouseProject"/> to get the stories for</param>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseStory"/></returns>
         public async Task<IEnumerable<ClubhouseStory>> ListStoriesAsync(long projectId)
         {
-            throw new NotImplementedException();
+            var stories = await ClubhouseApi.ListStoriesAsync(projectId, ClubhouseApiKey);
+
+            return stories;
         }
 
         #endregion // Projects
 
         #region Repositories
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseRepository"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseRepository"/></returns>
         public async Task<IEnumerable<ClubhouseRepository>> ListRepositoriesAsync()
         {
-            throw new NotImplementedException();
+            var repositories = await ClubhouseApi.ListRepositoriesAsync(ClubhouseApiKey);
+
+            return repositories;
         }
 
         public async Task<ClubhouseRepository> GetRepositoryAsync(long repositoryId)
@@ -477,9 +593,16 @@ namespace Clubhouse.io.net
 
         #region Teams
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseTeam"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseTeam"/></returns>
         public async Task<IEnumerable<ClubhouseTeam>> ListTeamsAsync()
         {
-            throw new NotImplementedException();
+            var teams = await ClubhouseApi.ListTeamsAsync(ClubhouseApiKey);
+
+            return teams;
         }
 
         public async Task<ClubhouseTeam> GetTeamAsync(long teamId)
@@ -491,6 +614,11 @@ namespace Clubhouse.io.net
 
         #region Workflows
 
+        /// <summary>
+        /// Gets all of  the <see cref="ClubhouseWorkflow"/>
+        /// objects in the account
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseWorkflow"/></returns>
         public async Task<IEnumerable<ClubhouseWorkflow>> ListWorkflowsAsync()
         {
             var clubhouseWorkflows = await ClubhouseApi.ListWorkflowsAsync(ClubhouseApiKey);
