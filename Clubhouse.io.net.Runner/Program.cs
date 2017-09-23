@@ -2,47 +2,62 @@
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Clubhouse.io.net.Entities;
+using Clubhouse.io.net.Entities.Categories;
 using Clubhouse.io.net.Entities.Stories;
 
 namespace Clubhouse.io.net.Runner
 {
     public class Program
     {
-        public static async System.Threading.Tasks.Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Console.WriteLine("Hello world!");
 
             var apiKey = ConfigurationManager.AppSettings["apiKey"];
 
             var clubhouse = new ClubhouseClient(apiKey);
-            //var story = await clubhouse.GetStoryAsync(7);
 
-            //Debug.WriteLine(story.Name);
+            await TestListMethodsAsync(clubhouse);
+            await TestCategoryMethodsAsync(clubhouse);
+        }
 
-            //var projects = await clubhouse.ListProjectsAsync();
-            //var workflows = await clubhouse.ListWorkflowsAsync();
-            //var users = await clubhouse.ListMembersAsync();
+        private static async Task TestListMethodsAsync(IClubhouseClient clubhouse)
+        {
+            var categories = await clubhouse.ListCategoriesAsync();
+            
+            var epics = await clubhouse.ListEpicsAsync();
+            var files = await clubhouse.ListFilesAsync();
+            var labels = await clubhouse.ListLabelsAsync();
+            var linkedFiles = await clubhouse.ListLinkedFilesAsync();
+            var members = await clubhouse.ListMembersAsync();
+            var milestones = await clubhouse.ListMilestonesAsync();
+            var projects = await clubhouse.ListProjectsAsync();
+            var repositories = clubhouse.ListRepositoriesAsync();
+            var teams = clubhouse.ListTeamsAsync();
+            var users = await clubhouse.ListMembersAsync();
+            var workflows = await clubhouse.ListWorkflowsAsync();
 
-            var story = await clubhouse.GetStoryAsync(1339, new[]{ ClubhouseStoryFields.Epic, ClubhouseStoryFields.Followers, ClubhouseStoryFields.Owners, ClubhouseStoryFields.Project, ClubhouseStoryFields.Requester, ClubhouseStoryFields.WorkflowState });
-            Debug.WriteLine(story.Name);
+            var projectId = projects.First().ID;
+            var epicId = epics.First().ID;
+            var stories = clubhouse.ListStoriesAsync(projectId);
+            var epicComments = await clubhouse.ListEpicCommentsAsync(epicId);
+        }
 
-        //Debug.WriteLine(projects.FirstOrDefault()?.ID);
+        private static async Task TestCategoryMethodsAsync(IClubhouseClient clubhouse)
+        {
+            var categoryParams = new ClubhouseCreateCategoryParams("Category Name", ClubhouseCategoryTypes.Milestone);
 
-            //var newCreateStory = new ClubhouseCreateStoryParams(
-            //    "Test Story Created Through The API",
-            //    projects.FirstOrDefault(), 
-            //    users.FirstOrDefault(), 
-            //    workflows.FirstOrDefault().States.First(), 
-            //    ClubhouseStoryTypes.Feature);
+            var createdCategory = await clubhouse.CreateCategoryAsync(categoryParams);
 
-            //var newStory = await clubhouse.CreateStoryAsync(newCreateStory);
+            var getCategory = await clubhouse.GetCategoryAsync(createdCategory.ID);
 
-            //Debug.WriteLine(newStory.Name);
+            var updateCategoryParams = new ClubhouseUpdateCategoryParams();
 
-            //var members = await clubhouse.ListMembersAsync();
+            var updatedCategory = await clubhouse.UpdateCategoryAsync(updateCategoryParams, getCategory.ID);
 
-            //Debug.WriteLine(members);
+            await clubhouse.DeleteCategoryAsync(updatedCategory.ID);
         }
     }
 }
