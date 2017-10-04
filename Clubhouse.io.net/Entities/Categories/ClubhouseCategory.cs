@@ -1,5 +1,7 @@
 ﻿using System;
+using Clubhouse.io.net.Entities.Workflows;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Clubhouse.io.net.Entities.Categories
 {
@@ -27,7 +29,8 @@ namespace Clubhouse.io.net.Entities.Categories
         public string Name { get; set; }
 
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ClubhouseCategoryTypes Type { get; set; }
 
         [JsonProperty(PropertyName = "updated_at")]
         public DateTime UpdatedAt { get; set; }

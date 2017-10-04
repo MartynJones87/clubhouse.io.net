@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Clubhouse.io.net.Entities.Categories;
 using Clubhouse.io.net.Entities.Workflows;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Clubhouse.io.net.Entities.Milestones
 {
@@ -48,7 +49,8 @@ namespace Clubhouse.io.net.Entities.Milestones
         public DateTime? StartedAtOverride { get; set; }
 
         [JsonProperty(PropertyName = "state")]
-        public ClubhouseWorkflowState State { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ClubhouseMilestoneStatesType State { get; set; }
 
         [JsonProperty(PropertyName = "updated_at")]
         public DateTime? UpdatedAt { get; set; }

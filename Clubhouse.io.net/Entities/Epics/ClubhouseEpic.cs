@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Clubhouse.io.net.Entities.Labels;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Clubhouse.io.net.Entities.Epics
 {
@@ -71,7 +72,8 @@ namespace Clubhouse.io.net.Entities.Epics
         public DateTime? StartedAtOverride { get; set; }
 
         [JsonProperty(PropertyName = "state")]
-        public string State { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ClubhouseEpicState State { get; set; }
 
         [JsonProperty(PropertyName = "stats")]
         public ClubhouseEpicStats Stats { get; set; }

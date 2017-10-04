@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Clubhouse.io.net.Entities;
 using Clubhouse.io.net.Entities.Categories;
 using Clubhouse.io.net.Entities.Epics;
 using Clubhouse.io.net.Entities.Files;
@@ -25,13 +24,13 @@ namespace Clubhouse.io.net
 
         Task<IEnumerable<ClubhouseCategory>> ListCategoriesAsync();
 
-        Task<ClubhouseCategory> CreateCategoryAsync(ClubhouseCreateCategoryParams category);
+        Task<ClubhouseCategory> CreateCategoryAsync(ClubhouseCreateCategoryParams categoryParams);
 
-        Task<ClubhouseCategory> GetCategoryAsync(int categoryId);
+        Task<ClubhouseCategory> GetCategoryAsync(long categoryId);
 
-        Task<ClubhouseCategory> UpdateCategoryAsync(ClubhouseUpdateCategoryParams category, int categoryId);
+        Task<ClubhouseCategory> UpdateCategoryAsync(ClubhouseUpdateCategoryParams categoryParams, long categoryId);
 
-        Task DeleteCategoryAsync(int categoryID);
+        Task DeleteCategoryAsync(long categoryID);
 
         #endregion // Categories
 
