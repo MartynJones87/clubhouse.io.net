@@ -4,10 +4,10 @@ namespace Clubhouse.io.net.Entities.Labels
 {
     public class ClubhouseCreateLabelParams
     {
-        [JsonProperty(PropertyName = "color")]
+        [JsonProperty(PropertyName = "color", NullValueHandling = NullValueHandling.Ignore)]
         public string Color { get; set; }
 
-        [JsonProperty(PropertyName = "external_id")]
+        [JsonProperty(PropertyName = "external_id", NullValueHandling = NullValueHandling.Ignore)]
         public string ExternalID { get; set; }
 
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
