@@ -13,6 +13,7 @@ using Clubhouse.io.net.Entities.Members;
 using Clubhouse.io.net.Entities.Milestones;
 using Clubhouse.io.net.Entities.Projects;
 using Clubhouse.io.net.Entities.Repositories;
+using Clubhouse.io.net.Entities.Search.Stories;
 using Clubhouse.io.net.Entities.Stories;
 using Clubhouse.io.net.Entities.StoryLinks;
 using Clubhouse.io.net.Entities.Teams;
@@ -32,6 +33,13 @@ namespace Clubhouse.io.net
         /// <param name="clubhouseApiKey"></param>
         public ClubhouseClient(string clubhouseApiKey)
         {
+            var isApiKeyAValidGuid = Guid.TryParse(clubhouseApiKey, out var clubhouseApiKeyGuid);
+
+            if (!isApiKeyAValidGuid)
+            {
+                throw new ArgumentException("Provided Clubhouse API Key is not a valid GUID value");
+            }
+
             ClubhouseApiKey = clubhouseApiKey;
             ClubhouseApi = RestService.For<IClubhouseRestApi>("https://api.clubhouse.io/api");
         }
@@ -436,6 +444,17 @@ namespace Clubhouse.io.net
         }
 
         #endregion // Repositories
+
+        #region Search
+
+        public async Task<ClubhouseStorySearchResults> SearchStoriesAsync(ClubhouseSearchStoriesParams searchParams)
+        {
+            var results = await ClubhouseApi.SearchStoriesAsync(searchParams, ClubhouseApiKey);
+
+            return results;
+        }
+
+        #endregion // Search
 
         #region Stories
 

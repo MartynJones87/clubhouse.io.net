@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Version>0.0.12-alpha</Version>
+		<Version>0.0.13-alpha</Version>
 		<Description>A .Net client library for the Clubhouse API https://clubhouse.io/api</Description>
 		<Authors>Martyn Jones</Authors>
 		<Company>Martyn Jones</Company>
@@ -10,7 +10,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/MartynJones87/clubhouse.io.net</PackageProjectUrl>
 		<PackageTags>Clubhouse REST API</PackageTags>
-		<PackageReleaseNotes>Making IterationID When Creating a Story Nullable.</PackageReleaseNotes>
+		<PackageReleaseNotes>Adding Stories Search functionality.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	</PropertyGroup>
 

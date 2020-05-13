@@ -10,6 +10,7 @@ using Clubhouse.io.net.Entities.Members;
 using Clubhouse.io.net.Entities.Milestones;
 using Clubhouse.io.net.Entities.Projects;
 using Clubhouse.io.net.Entities.Repositories;
+using Clubhouse.io.net.Entities.Search.Stories;
 using Clubhouse.io.net.Entities.Stories;
 using Clubhouse.io.net.Entities.StoryLinks;
 using Clubhouse.io.net.Entities.Teams;
@@ -237,6 +238,13 @@ namespace Clubhouse.io.net
         Task<ClubhouseRepository> GetRepositoryAsync(long repositoryId, string token);
 
         #endregion // Respositories
+
+        #region Search
+
+        [Get("/v3/search/stories?token={token}")]
+        Task<ClubhouseStorySearchResults> SearchStoriesAsync([Body] ClubhouseSearchStoriesParams searchParams, string token);
+
+        #endregion // Search
 
         #region Stories
 
