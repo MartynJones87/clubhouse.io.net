@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Clubhouse.io.net.Entities.Epics;
+using Clubhouse.io.net.Entities.ExternalTickets;
 using Clubhouse.io.net.Entities.Labels;
 using Clubhouse.io.net.Entities.Members;
 using Clubhouse.io.net.Entities.Projects;
@@ -51,7 +52,6 @@ namespace Clubhouse.io.net.Entities.Stories
 
         private void InitialiseRequiredFields()
         {
-            CompletedAtOverride = DateTime.MaxValue;
             CreatedAt = DateTime.Now;
             Description = string.Empty;
             ExternalID = string.Empty;
@@ -62,10 +62,13 @@ namespace Clubhouse.io.net.Entities.Stories
             UpdatedAt = DateTime.Now;
         }
 
+        [JsonProperty(PropertyName = "archived")]
+        public bool Archived { get; set; }
+        
         [JsonProperty(PropertyName = "comments")]
         public List<ClubhouseCreateCommentParams> Comments { get; set; }
 
-        [JsonProperty(PropertyName = "completed_at_override", Required = Required.Always)]
+        [JsonProperty(PropertyName = "completed_at_override", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? CompletedAtOverride { get; set; }
 
         [JsonProperty(PropertyName = "created_at", Required = Required.Always)]
@@ -86,11 +89,17 @@ namespace Clubhouse.io.net.Entities.Stories
         [JsonProperty(PropertyName = "external_id", Required = Required.Always)]
         public string ExternalID { get; set; }
 
+        [JsonProperty(PropertyName = "external_tickets")]
+        public List<ClubhouseCreateExternalTicketParams> ExternalTickets { get; set; }
+
         [JsonProperty(PropertyName = "file_ids", Required = Required.Always)]
         public List<long> FileIDs { get; set; }
 
         [JsonProperty(PropertyName = "follower_ids", Required = Required.Always)]
         public List<Guid> FollowerIDs { get; set; }
+
+        [JsonProperty(PropertyName = "iteration_id", NullValueHandling = NullValueHandling.Ignore)]
+        public long? IterationID { get; set; }
 
         [JsonProperty(PropertyName = "labels")]
         public List<ClubhouseCreateLabelParams> Labels { get; set; }
@@ -109,6 +118,9 @@ namespace Clubhouse.io.net.Entities.Stories
 
         [JsonProperty(PropertyName = "requested_by_id", Required = Required.Always)]
         public Guid? RequestedByID { get; set; }
+
+        [JsonProperty(PropertyName = "started_at_override", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? StartedAtOverride { get; set; }
 
         [JsonProperty(PropertyName = "story_links")]
         public List<ClubhouseCreateStoryLinkParams> StoryLinks { get; set; }

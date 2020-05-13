@@ -31,12 +31,13 @@ namespace Clubhouse.io.net.Runner
             var files = await clubhouse.ListFilesAsync();
             var labels = await clubhouse.ListLabelsAsync();
             var linkedFiles = await clubhouse.ListLinkedFilesAsync();
-            var members = await clubhouse.ListMembersAsync();
+            var orgPublicId = Guid.NewGuid();
+            var members = await clubhouse.ListMembersAsync(orgPublicId);
             var milestones = await clubhouse.ListMilestonesAsync();
             var projects = await clubhouse.ListProjectsAsync();
             var repositories = clubhouse.ListRepositoriesAsync();
             var teams = clubhouse.ListTeamsAsync();
-            var users = await clubhouse.ListMembersAsync();
+            var users = await clubhouse.ListMembersAsync(orgPublicId);
             var workflows = await clubhouse.ListWorkflowsAsync();
 
             var projectId = projects.First().ID;

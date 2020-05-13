@@ -6,8 +6,8 @@
         <title>Clubhouse.io.net</title>
         <authors>Martyn Jones</authors>
         <owners>Martyn Jones</owners>
-        <licenseUrl>https://raw.githubusercontent.com/MartynJones87/clubhouse.io.net/master/LICENSE</licenseUrl>
-        <projectUrl>https://github.com/MartynJones87/clubhouse.io.net</projectUrl>
+		<license type="expression">MIT</license>
+		<projectUrl>https://github.com/MartynJones87/clubhouse.io.net</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>A .Net client library for the Clubhouse API https://clubhouse.io/api </description>
         <releaseNotes>Story Get and Create, list Projects, Epics, Members and Labels.</releaseNotes>

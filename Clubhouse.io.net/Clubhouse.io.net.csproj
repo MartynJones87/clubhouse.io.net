@@ -1,21 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.6-alpha</Version>
-    <Description>A .Net client library for the Clubhouse API https://clubhouse.io/api</Description>
-    <Authors>Martyn Jones</Authors>
-    <Company>Martyn Jones</Company>
-    <Copyright>Copyright 2017</Copyright>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/MartynJones87/clubhouse.io.net/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/MartynJones87/clubhouse.io.net</PackageProjectUrl>
-    <PackageTags>Clubhouse REST API</PackageTags>
-    <PackageReleaseNotes>Fixing CreateLabelParams causing API Exception due to incorrectly including Null Color and ExternalID fields</PackageReleaseNotes>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<Version>0.0.12-alpha</Version>
+		<Description>A .Net client library for the Clubhouse API https://clubhouse.io/api</Description>
+		<Authors>Martyn Jones</Authors>
+		<Company>Martyn Jones</Company>
+		<Copyright>Copyright 2017</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/MartynJones87/clubhouse.io.net</PackageProjectUrl>
+		<PackageTags>Clubhouse REST API</PackageTags>
+		<PackageReleaseNotes>Making IterationID When Creating a Story Nullable.</PackageReleaseNotes>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Refit" Version="4.0.1" />
-  </ItemGroup>
+	<PropertyGroup>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Refit" Version="5.1.67" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+	</ItemGroup>
 
 </Project>

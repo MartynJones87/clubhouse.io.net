@@ -301,12 +301,13 @@ namespace Clubhouse.io.net
 
         /// <summary>
         /// Gets all of  the <see cref="ClubhouseMember"/>
-        /// objects in the account
+        /// objects in the account.
         /// </summary>
+        /// <param name="orgPublicId">The unique ID of the Organization to limit the list to.</param>
         /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="ClubhouseMember"/></returns>
-        public async Task<IEnumerable<ClubhouseMember>> ListMembersAsync()
+        public async Task<IEnumerable<ClubhouseMember>> ListMembersAsync(Guid orgPublicId)
         {
-            var members = await ClubhouseApi.ListMembersAsync(ClubhouseApiKey);
+            var members = await ClubhouseApi.ListMembersAsync(orgPublicId, ClubhouseApiKey);
 
             return members;
         }

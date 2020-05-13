@@ -35,6 +35,5 @@ namespace Clubhouse.io.net.Entities.Categories
         [JsonProperty(PropertyName = "updated_at")]
         public DateTime UpdatedAt { get; set; }
 
-
-}
+    }
 }
