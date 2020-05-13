@@ -1,21 +1,25 @@
-﻿using System;
-using System.Configuration;
-using System.Diagnostics;
+﻿using Clubhouse.io.net.Entities.Categories;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Clubhouse.io.net.Entities;
-using Clubhouse.io.net.Entities.Categories;
-using Clubhouse.io.net.Entities.Stories;
 
 namespace Clubhouse.io.net.Runner
 {
     public class Program
     {
+        private static Guid clubhouseOrganizationId;
+
         public static async Task Main(string[] args)
         {
             Console.WriteLine("Hello world!");
 
-            var apiKey = ConfigurationManager.AppSettings["apiKey"];
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+
+            var apiKey = config["apiKey"];
+            clubhouseOrganizationId = Guid.Parse(config["clubhouseOrganizationId"]);
 
             var clubhouse = new ClubhouseClient(apiKey);
 
@@ -26,18 +30,17 @@ namespace Clubhouse.io.net.Runner
         private static async Task TestListMethodsAsync(IClubhouseClient clubhouse)
         {
             var categories = await clubhouse.ListCategoriesAsync();
-            
+
             var epics = await clubhouse.ListEpicsAsync();
             var files = await clubhouse.ListFilesAsync();
             var labels = await clubhouse.ListLabelsAsync();
             var linkedFiles = await clubhouse.ListLinkedFilesAsync();
-            var orgPublicId = Guid.NewGuid();
-            var members = await clubhouse.ListMembersAsync(orgPublicId);
+            var members = await clubhouse.ListMembersAsync(clubhouseOrganizationId);
             var milestones = await clubhouse.ListMilestonesAsync();
             var projects = await clubhouse.ListProjectsAsync();
             var repositories = clubhouse.ListRepositoriesAsync();
             var teams = clubhouse.ListTeamsAsync();
-            var users = await clubhouse.ListMembersAsync(orgPublicId);
+            var users = await clubhouse.ListMembersAsync(clubhouseOrganizationId);
             var workflows = await clubhouse.ListWorkflowsAsync();
 
             var projectId = projects.First().ID;
