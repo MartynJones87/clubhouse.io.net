@@ -10,6 +10,8 @@ jobs:
   build:
 
     runs-on: windows-latest
+    env:
+      VERSION_NUMBER: 0.0.1.${{ github.run_number }}-beta
 
     steps:
     - uses: actions/checkout@v2
@@ -18,16 +20,18 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release /p:Version=$Env:VERSION_NUMBER
     - name: Test
-      run: dotnet test --verbosity normal
-  
-  deploy:
-    needs: build
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Pack nuget Package
-        run: dotnet pack Clubhouse.io.net/Clubhouse.io.net.csproj --configuration Release --include-source --include-symbols
-      - name: Push package to nuget
-        run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json   
+      run: dotnet test --verbosity normal /p:Version=$Env:VERSION_NUMBER
+    - name: Upload a NuGet Package Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Clubhouse.io.net.${{ env.VERSION_NUMBER }}
+        path:  Clubhouse.io.net/bin/Release/Clubhouse.io.net.${{ env.VERSION_NUMBER }}.nupkg
+    - name: Upload a NuGet Symbols Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Clubhouse.io.net.${{ env.VERSION_NUMBER }}
+        path:  Clubhouse.io.net/bin/Release/Clubhouse.io.net.${{ env.VERSION_NUMBER }}.snupkg
+    - name: Push package to nuget
+      run: dotnet nuget push Clubhouse.io.net/bin/Release/Clubhouse.io.net.$Env:VERSION_NUMBER.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json   
