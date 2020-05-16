@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release /p:Version=$Env:VERSION_NUMBER
     - name: Test
-      run: dotnet test --verbosity normal /p:Version=$Env:VERSION_NUMBER
+      run: dotnet test --configuration Release --verbosity normal --no-restore --no-build /p:Version=$Env:VERSION_NUMBER
     - name: Upload a NuGet Package Artifact
       uses: actions/upload-artifact@v2
       with:
